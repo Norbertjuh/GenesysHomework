@@ -2,16 +2,21 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.junit.jupiter.api.Test;
+
+
 import java.io.IOException;
 
 import static org.junit.Assert.assertTrue;
 
 public class RestApiTesting {
 
+    private static Logger logger = LogManager.getLogger(RestApiTesting.class);
+
     @Test
     public void case5() throws IOException {
-
         Response response = RestAssured.get("https://jsonplaceholder.typicode.com/users");
         String jsonString = response.asString();
 
@@ -25,8 +30,7 @@ public class RestApiTesting {
 
             String username = lines[nameRow].substring(13, lines[nameRow].lastIndexOf("\""));
             String email = lines[emailRow].substring(14, lines[emailRow].lastIndexOf("\""));
-            System.out.print(username + " | ");
-            System.out.println(email);
+            logger.info(username + " | " + email);
             emailRow = emailRow + 23;
         }
 
